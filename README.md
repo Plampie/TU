@@ -1,2 +1,2 @@
-# VP-TU-
-Repo for Labs VP TU
+# TU
+Repo for Labs TU

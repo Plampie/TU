@@ -1,0 +1,16 @@
+<and>
+  <like expr="like">
+    <evtDestDocPropertyString name="Format" value=".ssp" />
+  </like>
+  <in>
+    <evtOperationType />
+    <list>
+      <constOpFileSaveAs />
+      <constOpFileWrite />
+    </list>
+  </in>
+  <eq>
+    <evtDestDocPropertyString name="DestinationFolder" value="\\shared\\folder\\path" />
+  </eq>
+</and>
+s

@@ -76,7 +76,7 @@ def search_by_brand(clothes_list, brand):
     if not found:
         print("No items found for this brand.")
         
-# sell_clothe_by_id(clothes_list, id, num)
+# sell_clothes_by_id(clothes_list, id, num)
 # потребителят въвежда от клавиатурата номер (id) и 
 # желан брой/ количество (num) от даден артикул. 
 # Функцията проверява има ли наличен артикул с такъв номер. 

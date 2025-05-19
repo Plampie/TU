@@ -34,9 +34,9 @@ Treatment* add_new_treatment(Treatment *history, int *count) {
     printf("Enter date (DD.MM.YYYY): ");
     scanf("%s", new_history[*count].date);
     printf("Enter patient name: ");
-    scanf(" %30[^"]", new_history[*count].patient_name);
+    scanf(" %30[^"]", new_history[*count].patient_name");
     printf("Enter diagnosis: ");
-    scanf(" %50[^"]", new_history[*count].diagnosis);
+    scanf(" %50[^"]", new_history[*count].diagnosis");
     
     (*count)++;
     return new_history;

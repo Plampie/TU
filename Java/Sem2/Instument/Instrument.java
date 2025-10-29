@@ -1,8 +1,8 @@
 public class Instrument {
 
-    String name;
+    private String name;
 
-    void play() {
+    public void play() {
         System.out.println("Generic instrument sound.");
     }
 

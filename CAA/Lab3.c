@@ -121,7 +121,7 @@ int contains_digit(int n, int d) { // returns 1 if digit is found, 0 otherwise
 void digit_check_task(void) {
     int n, d;
 
-    printf("Enter a natural number: ");
+    printf("Enter a number: ");
     if (scanf("%d", &n) != 1 || n < 0) {
         printf("Invalid input.\n");
         return;

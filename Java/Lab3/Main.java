@@ -14,7 +14,7 @@ public class Main {
             String choice = prompt("Choose an option (1-5): ");
             switch (choice) {
                 case "1":
-                    company = handleCreateCompany();
+                    company = createCompany();
                     break;
 
                 case "2":
@@ -52,8 +52,9 @@ public class Main {
         }
     }
 
-    private static Company handleCreateCompany() {
-        System.out.println("=== Enter Company Info ===");
+// main menu
+    private static Company createCompany() {
+        System.out.println("=== Enter Company Information ===");
         String name;
         while (true) {
             name = prompt("Company name: ");
@@ -111,6 +112,8 @@ public class Main {
         }
     }
 
+  
+// helpers
     private static void printMenu() {
         System.out.println("==== Group Insurance Registration ====");
         System.out.println("1. Enter company");

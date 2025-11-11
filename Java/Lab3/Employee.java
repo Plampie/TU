@@ -11,21 +11,13 @@ public class Employee {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
-    public String getEmployeeId() {
-        return employeeId;
-    }
+    public String getEmployeeId() { return employeeId; }
 
-    public int getExperience() {
-        return experience;
-    }
+    public int getExperience() { return experience; }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() { return email; }
 
     @Override
     public String toString() {

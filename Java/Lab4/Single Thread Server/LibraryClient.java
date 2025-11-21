@@ -37,10 +37,11 @@ public class LibraryClient {
                     System.out.println("Enter author:");
                     String author = scanner.nextLine();
 
+                    // send to server
                     out.writeInt(1);
                     out.writeUTF(title);
                     out.writeUTF(author);
-                    out.flush();
+                    out.flush(); // forces buffer to send immediately
 
                     String response = in.readUTF();
                     System.out.println("Server: " + response);

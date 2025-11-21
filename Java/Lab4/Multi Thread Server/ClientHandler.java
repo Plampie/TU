@@ -4,9 +4,9 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
 
-public class ClientHandler implements Runnable {
-    private Socket socket;
-    private Library library;
+public class ClientHandler implements Runnable { // it can be run inside a Thread
+    private Socket socket; // TCP connection
+    private Library library; // shared library instance
 
     public ClientHandler(Socket socket, Library library) {
         this.socket = socket;
@@ -19,8 +19,11 @@ public class ClientHandler implements Runnable {
             DataInputStream in = new DataInputStream(s.getInputStream());
             DataOutputStream out = new DataOutputStream(s.getOutputStream());
 
+            // handle commands until client disconnects
             while (true) {
+                
                 int opCode;
+
                 try {
                     opCode = in.readInt();
                 } catch (EOFException e) {

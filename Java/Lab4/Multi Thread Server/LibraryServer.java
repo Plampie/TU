@@ -12,10 +12,11 @@ public class LibraryServer {
             while (true) {
                 System.out.println("Waiting for client...");
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Client connected: " + clientSocket.getInetAddress());
+                System.out.println("Client connected: " + clientSocket.getInetAddress()); // client's IP address
 
+                // For each client: Create a ClientHandler
                 ClientHandler handler = new ClientHandler(clientSocket, library);
-                Thread t = new Thread(handler);
+                Thread t = new Thread(handler); // create a new thread for the handler
                 t.start();
             }
         } catch (IOException e) {

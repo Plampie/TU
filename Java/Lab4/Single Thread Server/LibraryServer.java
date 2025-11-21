@@ -1,63 +1,94 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
-public class LibraryServer {
+public class LibraryClient {
     public static void main(String[] args) {
-        Library library = new Library();
+        try (Socket socket = new Socket("localhost", 5000)) {
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            Scanner scanner = new Scanner(System.in);
 
-        try (ServerSocket serverSocket = new ServerSocket(5000)) {
-            System.out.println("Library server started on port 5000.");
+            System.out.println("Connected to library server.");
 
             while (true) {
-                System.out.println("Waiting for client...");
-                try (Socket clientSocket = serverSocket.accept()) {
-                    System.out.println("Client connected.");
+                System.out.println("\nChoose operation:");
+                System.out.println("1 - Add book");
+                System.out.println("2 - Rent book");
+                System.out.println("3 - Return book");
+                System.out.println("0 - Exit client");
 
-                    DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-                    DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
+                int choice;
+                try {
+                    choice = Integer.parseInt(scanner.nextLine());
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid number.");
+                    continue;
+                }
 
-                    while (true) {
-                        int opCode;
-                        try {
-                            opCode = in.readInt();
-                        } catch (EOFException e) {
-                            System.out.println("Client disconnected.");
-                            break;
-                        }
+                if (choice == 0) {
+                    System.out.println("Exiting client...");
+                    break;
+                } else if (choice == 1) {
+                    System.out.println("Enter title:");
+                    String title = scanner.nextLine();
+                    System.out.println("Enter author:");
+                    String author = scanner.nextLine();
 
-                        if (opCode == 1) {
-                            String title = in.readUTF();
-                            String author = in.readUTF();
-                            String result = library.addBook(title, author);
-                            out.writeUTF(result);
-                            out.flush();
-                        } else if (opCode == 2) {
-                            int id = in.readInt();
-                            String user = in.readUTF();
-                            String result = library.rentBook(id, user);
-                            out.writeUTF(result);
-                            out.flush();
-                        } else if (opCode == 3) {
-                            int id = in.readInt();
-                            String result = library.returnBook(id);
-                            out.writeUTF(result);
-                            out.flush();
-                        } else {
-                            String result = "Unknown operation code: " + opCode;
-                            out.writeUTF(result);
-                            out.flush();
-                        }
+                    // send to server
+                    out.writeInt(1);
+                    out.writeUTF(title);
+                    out.writeUTF(author);
+                    out.flush(); // forces buffer to send immediately
+
+                    String response = in.readUTF();
+                    System.out.println("Server: " + response);
+
+                } else if (choice == 2) {
+                    System.out.println("Enter book id:");
+                    int id;
+                    try {
+                        id = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid id.");
+                        continue;
                     }
-                } catch (IOException e) {
-                    System.out.println("Error while handling client: " + e.getMessage());
+                    System.out.println("Enter your name:");
+                    String user = scanner.nextLine();
+
+                    out.writeInt(2);
+                    out.writeInt(id);
+                    out.writeUTF(user);
+                    out.flush();
+
+                    String response = in.readUTF();
+                    System.out.println("Server: " + response);
+
+                } else if (choice == 3) {
+                    System.out.println("Enter book id:");
+                    int id;
+                    try {
+                        id = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid id.");
+                        continue;
+                    }
+
+                    out.writeInt(3);
+                    out.writeInt(id);
+                    out.flush();
+
+                    String response = in.readUTF();
+                    System.out.println("Server: " + response);
+
+                } else {
+                    System.out.println("Unknown option.");
                 }
             }
         } catch (IOException e) {
-            System.out.println("Server error: " + e.getMessage());
+            System.out.println("Client error: " + e.getMessage());
         }
     }
 }

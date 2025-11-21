@@ -11,6 +11,21 @@ public class Library {
         return "Book added: " + b.toString();
     }
 
+    public synchronized String listAllBooks() {
+    if (books.isEmpty()) {
+        return "No books in the library.";
+    }
+
+    StringBuilder sb = new StringBuilder();
+    sb.append("Books in library:\n");
+
+    for (Book b : books) {
+        sb.append(b.toString()).append("\n");
+    }
+
+    return sb.toString();
+    }
+
     public synchronized String rentBook(int id, String user) {
         Book book = findById(id);
         if (book == null) {

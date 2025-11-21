@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class LibraryClient {
     public static void main(String[] args) {
         try (Socket socket = new Socket("localhost", 5000)) {
+
             DataInputStream in = new DataInputStream(socket.getInputStream());
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             Scanner scanner = new Scanner(System.in);
@@ -14,13 +15,16 @@ public class LibraryClient {
             System.out.println("Connected to library server.");
 
             while (true) {
+
                 System.out.println("\nChoose operation:");
                 System.out.println("1 - Add book");
                 System.out.println("2 - Rent book");
                 System.out.println("3 - Return book");
+                System.out.println("4 - List all books");
                 System.out.println("0 - Exit client");
 
                 int choice;
+
                 try {
                     choice = Integer.parseInt(scanner.nextLine());
                 } catch (NumberFormatException e) {
@@ -31,9 +35,12 @@ public class LibraryClient {
                 if (choice == 0) {
                     System.out.println("Exiting client...");
                     break;
-                } else if (choice == 1) {
+                }
+
+                else if (choice == 1) {
                     System.out.println("Enter title:");
                     String title = scanner.nextLine();
+
                     System.out.println("Enter author:");
                     String author = scanner.nextLine();
 
@@ -43,16 +50,19 @@ public class LibraryClient {
                     out.flush();
 
                     System.out.println("Server: " + in.readUTF());
+                }
 
-                } else if (choice == 2) {
+                else if (choice == 2) {
                     System.out.println("Enter book id:");
                     int id;
+
                     try {
                         id = Integer.parseInt(scanner.nextLine());
                     } catch (NumberFormatException e) {
                         System.out.println("Invalid id.");
                         continue;
                     }
+
                     System.out.println("Enter your name:");
                     String user = scanner.nextLine();
 
@@ -62,10 +72,12 @@ public class LibraryClient {
                     out.flush();
 
                     System.out.println("Server: " + in.readUTF());
+                }
 
-                } else if (choice == 3) {
+                else if (choice == 3) {
                     System.out.println("Enter book id:");
                     int id;
+
                     try {
                         id = Integer.parseInt(scanner.nextLine());
                     } catch (NumberFormatException e) {
@@ -78,11 +90,20 @@ public class LibraryClient {
                     out.flush();
 
                     System.out.println("Server: " + in.readUTF());
+                }
 
-                } else {
+                else if (choice == 4) {
+                    out.writeInt(4);
+                    out.flush();
+
+                    System.out.println("Server:\n" + in.readUTF());
+                }
+
+                else {
                     System.out.println("Unknown option.");
                 }
             }
+
         } catch (IOException e) {
             System.out.println("Client error: " + e.getMessage());
         }

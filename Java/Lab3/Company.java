@@ -1,8 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
+import java.util.*
+    
 public class Company {
 
     private String companyName;      
@@ -19,10 +16,8 @@ public class Company {
 
     // Getters & setters
     public String getCompanyName() { return companyName; }
-    public void setCompanyName(String companyName) { this.companyName = companyName; }
 
     public String getDomain() { return domain; }
-    public void setDomain(String domain) { this.domain = domain; }
 
     public List<Employee> getEmployees() { return employees; }
     public void setEmployees(List<Employee> employees) { this.employees = employees; }
@@ -34,9 +29,7 @@ public class Company {
      * - email must belong to this company's domain
      * - experience must be > 1 (insurance eligibility)
      */
-    public void addEmployee(Employee e)
-            throws InvalidEmailException, EmployeeNotEligibleException {
-
+    public void addEmployee(Employee e) throws InvalidEmailException, EmployeeNotEligibleException {
         if (e == null) {
             throw new IllegalArgumentException("Employee cannot be null.");
         }
@@ -95,7 +88,6 @@ public class Company {
     public boolean validateEmail(String email) {
         if (email == null || email.isEmpty() || domain == null || domain.isEmpty()) return false;
 
-        // Build dynamic email pattern: ^[\w.-]+@<escaped-domain>$
         String domainQuoted = Pattern.quote(domain);
         String emailRegex = "^[\\w.-]+@" + domainQuoted + "$";
 
